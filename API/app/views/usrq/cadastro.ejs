@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Cadastro</title>
+    </head>
+<body>
+
+    <h1>Cadastro:</h1>
+    <br />
+
+    <% if(validacao.length > 0){ %>
+        <div class='alert alert-danger'>
+            <strong>Atençao!</strong>
+            <ul>
+                <% for (var i = 0; i < validacao.length; i++){ %>
+                    <li><%=validacao[i].msg%></li>
+                <% } %>
+            </ul>
+        </div>
+    <% } %>
+
+        <form action="/cadastrar" method="post">
+        <h2>Conta:</h2>
+        <label>Email:</label>
+        <input type="email" value="<%=dadosForm.email%>" id="email" name="email" placeholder="ex: ian@gmail.com " />
+        <br />
+
+        <label>Senha:</label>
+        <input type="password" value="<%=dadosForm.senha%>" id="senha" name="senha" placeholder="Ex: asdfgh123 " />
+        <br />
+        <label>Repita a senha:</label>
+        <input type="password" value="<%=dadosForm.rsenha%>" id="rsenha" name="rsenha" placeholder="Ex: asdfgh123 " />
+        <br />
+        
+        <h2>Dados Pessoais:</h2>
+        <label>Nome Completo:</label>
+        <input type="text" value="<%=dadosForm.nome%>" id="nome" name="nome" placeholder="ex: Ian Nascimento da Silva " />
+        <br />
+
+        <label>Matricula:</label>
+        <input type="number" value="<%=dadosForm.matricula%>" id="matricula" name="matricula" placeholder="ex: 2016****123" />
+        <br />
+        
+        <input type="submit" value="Enviar" />
+    </form>
+
+</body>
+</html>
