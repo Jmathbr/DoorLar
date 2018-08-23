@@ -14,11 +14,16 @@ module.exports = function(app){
     app.get('/abrir', function(req,res){
         const axios = require('axios');
         username = '123';
-        axios.get('hhttp://10.6.4.110:8011/?Matricula=' + username)
+        axios.get('http://10.6.4.110:8011/?Matricula=' + username)
         .then(function(response){
         console.log(response.data); // ex.: { user: 'Your User'}
-        console.log(response.status); // ex.: 200
-    })
+        console.log(response.status);
+        console.log('abrir1') // ex.: 200
+        app.app.controllers.admin.abrir(app, req, res)
+        })
+    }); 
     
-  }); 
+    app.get('/cadastro', function(req,res){
+        res.render('usrq/cadastro', {validacao: {},dadosForm: {}})
+    })
 }
