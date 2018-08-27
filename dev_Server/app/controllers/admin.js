@@ -26,6 +26,7 @@ module.exports.sair = function(app, req, res){
         res.render('home/index',{validacao:{}})
     })
 }
+
 module.exports.abrir = function(app, req, res){
     if(req.session.autorizado == true){
         
@@ -37,12 +38,12 @@ module.exports.abrir = function(app, req, res){
         console.log(response.status);
         console.log('abrir1') // ex.: 200
         })
-
+        
         if(req.session.classe == 'SU'){
-            res.render('admin')
+            res.redirect('admin')
         }
         else{
-            res.render('user')
+            res.redirect('user')
         }
     }
     else{
