@@ -10,6 +10,23 @@ UsuariosDAO.prototype.inserirUsuario = function(usuario){
         })
     });
 }
+//pesquisando por id e inserindo a tag
+UsuariosDAO.prototype.UpdateTag = function(Matricula,tag, req, res){
+    this._connection.open(function(err,mongoclient){
+        if (err) throw err;
+        var myquery = {  matricula: Matricula  };
+        var newvalues = { $set: { tag: "111111111111111" } };
+
+        mongoclient.collection("usuarios", function(err,collection){
+
+            collection.updateMany(myquery, newvalues, function(err, res) {
+                if (err) throw err;
+                console.log("TagCadastrada");
+                mongoclient.close();
+            })
+        })
+    });
+}
 
 UsuariosDAO.prototype.autenticar = function(usuario, req, res){
     this._connection.open(function(err,mongoclient){

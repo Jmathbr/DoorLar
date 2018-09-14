@@ -13,13 +13,13 @@ module.exports.cadastrar = function(app, req, res){
 
     var erros = req.validationErrors();
     dadosForm.classe = 'C';
+    dadosForm.tag = '0000';
     if(erros){
         res.render('usrq/cadastro',{validacao: erros, dadosForm: dadosForm})
         return;
     }
     else{
-        res.redirect("tag")
-        console.log("renderizando para tag")
+        res.render("home/index")
     }
     var connection = app.config.dbConnection;
     var UsuariosDAO = new app.app.models.UsuariosDAO(connection);
