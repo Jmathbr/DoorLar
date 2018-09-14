@@ -50,3 +50,26 @@ module.exports.abrir = function(app, req, res){
         res.render("home/index",{validacao:{}})
     }
 }
+
+module.exports.tag = function(app, req, res){
+    res.render('usrq/tag', {validacao: {},dadosForm: {}});
+    console.log('renderizando tag')
+}
+
+module.exports.tagr = function(app, req, res){
+    var dadosForm = req.body;
+    req.assert('tag',' As senhas nao sao iguais').notEmpty();
+    console.log("asdasdas");
+    var connection = app.config.dbConnection;
+    var UsuariosDAO = new app.app.models.UsuariosDAO(connection);
+
+    UsuariosDAO.inserirUsuario(dadosForm)
+    if(req.session.autorizado == true){
+        if(req.session.classe == 'SU'){
+            res.render('admin')
+        }
+        else{
+            res.render('user')
+        }
+    }
+}

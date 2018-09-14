@@ -1,7 +1,6 @@
 module.exports.cadastro = function(app, req, res){
     res.render('usrq/cadastro', {validacao: {},dadosForm: {}});
 }
-
 module.exports.cadastrar = function(app, req, res){
 
     var dadosForm = req.body;
@@ -13,13 +12,15 @@ module.exports.cadastrar = function(app, req, res){
     req.assert('senha',' As senhas nao sao iguais').equals(dadosForm.rsenha);
 
     var erros = req.validationErrors();
-
+    dadosForm.classe = 'C';
     if(erros){
         res.render('usrq/cadastro',{validacao: erros, dadosForm: dadosForm})
         return;
     }
-    dadosForm.classe = 'C';
-    dadosForm.last = '';
+    else{
+        res.redirect("tag")
+        console.log("renderizando para tag")
+    }
     var connection = app.config.dbConnection;
     var UsuariosDAO = new app.app.models.UsuariosDAO(connection);
 

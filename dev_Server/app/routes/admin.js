@@ -12,9 +12,7 @@ module.exports = function(app){
     })
 
     app.get('/abrir', function(req,res){
-        
         app.app.controllers.admin.abrir(app, req, res)
-
     }); 
     
     app.get('/cadastro', function(req,res){
