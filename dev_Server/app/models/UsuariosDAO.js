@@ -14,12 +14,12 @@ UsuariosDAO.prototype.inserirUsuario = function(usuario){
 UsuariosDAO.prototype.UpdateTag = function(Matricula,tag, req, res){
     this._connection.open(function(err,mongoclient){
         if (err) throw err;
-        var myquery = {  matricula: Matricula  };
-        var newvalues = { $set: { tag: "111111111111111" } };
+        var myquery = {  matricula: Matricula  };           //dado que eu quero procurar{endereço:dado}
+        var newvalues = { $set: { tag: "222222222" } };     // setando novos valores {endereço:dado}
 
         mongoclient.collection("usuarios", function(err,collection){
 
-            collection.updateMany(myquery, newvalues, function(err, res) {
+            collection.updateOne(myquery, newvalues, function(err, res) {
                 if (err) throw err;
                 console.log("TagCadastrada");
                 mongoclient.close();
@@ -35,13 +35,15 @@ UsuariosDAO.prototype.autenticar = function(usuario, req, res){
                 if(result[0] != undefined){
                     req.session.autorizado = true;
                     req.session.classe = result[0].classe; 
-                    console.log(req.session._id = result[0]._id);
+                    console.log(req.session.matricula = result[0].matricula);
+                    var user = req.session.matricula = result[0].matricula
                 }
                 if(req.session.autorizado == true){
                     if(req.session.classe == 'SU'){
                         res.redirect('/admin')
                     }
                     else{
+                        console.log(req.body)         //Recupera os dados que foram fornecidos na pagina
                         res.redirect('/user')
                     }
                 }

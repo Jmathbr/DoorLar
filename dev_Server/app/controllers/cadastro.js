@@ -13,7 +13,7 @@ module.exports.cadastrar = function(app, req, res){
 
     var erros = req.validationErrors();
     dadosForm.classe = 'C';
-    dadosForm.tag = '0000';
+    dadosForm.tag = '01010101';
     if(erros){
         res.render('usrq/cadastro',{validacao: erros, dadosForm: dadosForm})
         return;
@@ -25,6 +25,6 @@ module.exports.cadastrar = function(app, req, res){
     var UsuariosDAO = new app.app.models.UsuariosDAO(connection);
 
     UsuariosDAO.inserirUsuario(dadosForm)
-
+    
     res.redirect("/")
 }

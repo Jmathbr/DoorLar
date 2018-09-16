@@ -61,7 +61,7 @@ module.exports.tagr = function(app, req, res){
     //solicitando o cadastro, por exemplo
     //metodo q, quando metodo 1 for passado por get,
     //o esp vai esperar a tag e logo em seguida dar um post na tag
-    var Matricula = "88888888" //tenho que conseguir pegar essa variavel na hora de logar
+    var Matricula = "2313231212321" //tenho que conseguir pegar essa variavel na hora de logar
     var dadosForm = req.body;
     req.assert('tag',' As senhas nao sao iguais').notEmpty();
     var connection = app.config.dbConnection;
