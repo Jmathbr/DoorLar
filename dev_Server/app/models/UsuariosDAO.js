@@ -15,7 +15,7 @@ UsuariosDAO.prototype.UpdateTag = function(Matricula,tag, req, res){
     this._connection.open(function(err,mongoclient){
         if (err) throw err;
         var myquery = {  matricula: Matricula  };           //dado que eu quero procurar{endereço:dado}
-        var newvalues = { $set: { tag: "222222222" } };     // setando novos valores {endereço:dado}
+        var newvalues = { $set: { tag: tag } };     // setando novos valores {endereço:dado}
 
         mongoclient.collection("usuarios", function(err,collection){
 
@@ -35,9 +35,9 @@ UsuariosDAO.prototype.autenticar = function(usuario, req, res){
                 if(result[0] != undefined){
                     req.session.autorizado = true;
                     req.session.classe = result[0].classe; 
-                    console.log(req.session.matricula = result[0].matricula);
-                    var user = req.session.matricula = result[0].matricula
+                    req.session.matricula = result[0].matricula;
                 }
+                
                 if(req.session.autorizado == true){
                     if(req.session.classe == 'SU'){
                         res.redirect('/admin')

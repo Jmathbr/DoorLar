@@ -61,12 +61,14 @@ module.exports.tagr = function(app, req, res){
     //solicitando o cadastro, por exemplo
     //metodo q, quando metodo 1 for passado por get,
     //o esp vai esperar a tag e logo em seguida dar um post na tag
-    var Matricula = "2313231212321" //tenho que conseguir pegar essa variavel na hora de logar
+    var matricula = req.session.matricula //tenho que conseguir pegar essa variavel na hora de logar
+
     var dadosForm = req.body;
     req.assert('tag',' As senhas nao sao iguais').notEmpty();
+    
     var connection = app.config.dbConnection;
     var UsuariosDAO = new app.app.models.UsuariosDAO(connection);
-    UsuariosDAO.UpdateTag(Matricula,dadosForm)
+    UsuariosDAO.UpdateTag(matricula,dadosForm)
     if(req.session.autorizado == true){
         if(req.session.classe == 'SU'){
             res.render('admin')
