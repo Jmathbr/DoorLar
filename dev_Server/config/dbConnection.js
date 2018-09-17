@@ -1,7 +1,6 @@
 var mongo = require('mongodb');
 
 var ConnMongoDB = function(){
-    console.log('subiu a conexao')
     var db = new mongo.Db(
         'dateWeb',
         new mongo.Server(

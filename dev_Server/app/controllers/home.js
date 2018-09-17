@@ -14,7 +14,7 @@ module.exports.autenticar = function(app, req, res){
         res.render('home/index',{validacao: erros, dadosForm: dadosForm})
         return;
     }
-    console.log(dadosForm.email)
+    
     var connection = app.config.dbConnection;
     var UsuariosDAO = new app.app.models.UsuariosDAO(connection);
 

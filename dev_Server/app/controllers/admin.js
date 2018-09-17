@@ -53,7 +53,6 @@ module.exports.abrir = function(app, req, res){
 
 module.exports.tag = function(app, req, res){
     res.render('usrq/tag', {validacao: {},dadosForm: {}});
-    console.log('renderizando tag')
 }
 
 module.exports.tagr = function(app, req, res){
@@ -62,13 +61,12 @@ module.exports.tagr = function(app, req, res){
     //metodo q, quando metodo 1 for passado por get,
     //o esp vai esperar a tag e logo em seguida dar um post na tag
     var matricula = req.session.matricula //tenho que conseguir pegar essa variavel na hora de logar
-
     var dadosForm = req.body;
     req.assert('tag',' As senhas nao sao iguais').notEmpty();
     
     var connection = app.config.dbConnection;
     var UsuariosDAO = new app.app.models.UsuariosDAO(connection);
-    UsuariosDAO.UpdateTag(matricula,dadosForm)
+    UsuariosDAO.UpdateTag(matricula,dadosForm['tag'])
     if(req.session.autorizado == true){
         if(req.session.classe == 'SU'){
             res.render('admin')

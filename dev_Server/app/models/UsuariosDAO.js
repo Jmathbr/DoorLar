@@ -5,6 +5,7 @@ function UsuariosDAO(connection){
 UsuariosDAO.prototype.inserirUsuario = function(usuario){
     this._connection.open(function(err,mongoclient){
         mongoclient.collection("usuarios", function(err,collection){
+            console.log("Usuario: ",usuario["nome"]," - Cadastrou")
             collection.insert(usuario);
             mongoclient.close();
         })
@@ -21,7 +22,7 @@ UsuariosDAO.prototype.UpdateTag = function(Matricula,tag, req, res){
 
             collection.updateOne(myquery, newvalues, function(err, res) {
                 if (err) throw err;
-                console.log("TagCadastrada");
+                console.log("Tag Cadastrada:",tag);
                 mongoclient.close();
             })
         })
@@ -37,13 +38,13 @@ UsuariosDAO.prototype.autenticar = function(usuario, req, res){
                     req.session.classe = result[0].classe; 
                     req.session.matricula = result[0].matricula;
                 }
-                
+                console.log("Usuario: ",result[0].nome," - entrou")
                 if(req.session.autorizado == true){
                     if(req.session.classe == 'SU'){
                         res.redirect('/admin')
                     }
                     else{
-                        console.log(req.body)         //Recupera os dados que foram fornecidos na pagina
+                        //console.log(req.body)         //Recupera os dados que foram fornecidos na pagina
                         res.redirect('/user')
                     }
                 }
