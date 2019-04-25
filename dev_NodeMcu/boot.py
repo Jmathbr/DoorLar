@@ -2,7 +2,7 @@ import gc
 import ujson
 gc.collect()
 try:
-    pritn(" . ")
+    pritn("  .  ")
     arq = open("ID.json").read()
     print("Found IDs list")
 
