@@ -11,12 +11,12 @@ class Setup:
             arq = open("ID.json").read()
             print("Found ID Master")
             arqload = ujson.loads(arq)
-            arq.close()
 
         except:
             print("Not Found ID Master")
             print("Scan A RFID Card to Define as Master Card: ")
-
+            arq = open("ID.json","w")
+            
             while(True):
                 time.sleep_ms(100)
                 IdMaster = str(rf.get())

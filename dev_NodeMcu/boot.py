@@ -1,8 +1,9 @@
 import gc
 import ujson
 gc.collect()
+
 try:
-    pritn("  .  ")
+    print("  .  ")
     arq = open("ID.json").read()
     print("Found IDs list")
 
