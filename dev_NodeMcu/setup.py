@@ -9,6 +9,7 @@ class Setup:
     def __init__(self):
         print("Setup started")
         
+        
         try:
             arq = open("ID.json").read()
             print("Found ID Master")
