@@ -2,11 +2,11 @@ from rfidPorteiro import RfidPorteiro as rf
 import ujson
 import time
 
-
+#Setup
 class Setup:
     def __init__(self):
         print("Setup started")
-        #Colocar no boot
+        
         try:
             arq = open("ID.json").read()
             print("Found ID Master")

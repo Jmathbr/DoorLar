@@ -1,7 +1,7 @@
 import gc
 import ujson
 gc.collect()
-
+#Criando arq de IDs
 try:
     print("  .  ")
     arq = open("ID.json").read()

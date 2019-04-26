@@ -2,8 +2,10 @@ from rfidPorteiro import RfidPorteiro as rf
 from setup import Setup as stp
 import time
 import ujson
-stp()
+
 #void Setup
+stp()
+
 
 #void loop
 #while(True):
