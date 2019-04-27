@@ -31,8 +31,6 @@ class Setup:
             arq.write(ujson.dumps(data))
             arq.close()
 
-
-
     def findCard(self, tag):
 
         arq = open("ID.json").read() #abrindo arquivo listas    
@@ -49,19 +47,21 @@ class Setup:
         print("Tag:", findTag, ":st: not found")
         return (False,i)
 
+    def addCard(self, tag):
+        if self.findCard(tag)[0] == False:
+            arq = open("ID.json").read()          #abrindo arquivo listas    
+            arqload = ujson.loads(arq)
+            newdata = {"ID":tag} #str(rf.get())
+            arqload.append(newdata)              #add novo dado a lista redes
+            arq = open("ID.json","w")
+            arq.write(ujson.dumps(arqload))      #sobrecrevendo lista antiga com a nova lista atualizada
+            arq.close()
+        else:
+            print("> ............................ <")
+            print("Cartao ja cadastrado.")
+            print("> ............................ <")
 
-    def addCard(self, tag): #ATENÇAO: Lembrar de checar se a tag ja existe
-
-        arq = open("ID.json").read()          #abrindo arquivo listas    
-        arqload = ujson.loads(arq)
-        newdata = {"ID":tag} #str(rf.get())
-        arqload.append(newdata)              #add novo dado a lista redes
-        arq = open("ID.json","w")
-        arq.write(ujson.dumps(arqload))      #sobrecrevendo lista antiga com a nova lista atualizada
-        arq.close()
     
-
-
     def rmCard(self,tag):
 
         pos = int(self.findCard(tag)[1]) 
@@ -71,8 +71,6 @@ class Setup:
         arq = open("ID.json","w")
         arq.write(ujson.dumps(arqload))    #sobrecrevendo lista antiga com a nova lista atualizada
         arq.close()
-
-
 
     def IsMaster(self,tag):
 
