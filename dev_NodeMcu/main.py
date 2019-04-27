@@ -8,11 +8,12 @@ import machine, neopixel
 from machine import Pin
 
 #Defining constants
-RELAY_OFF = 0
-RELAY_ON = 1
+RELAY_OFF = BUTTON_OFF = 0
+RELAY_ON = BUTTON_ON = 1
 NP_OFF = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 WHITE = (128, 128, 128)
 
@@ -21,6 +22,12 @@ WHITE = (128, 128, 128)
 np = neopixel.NeoPixel(machine.Pin(13)(1))
 #Relay Pin
 relay = Pin(12, Pin.OUT)
+#Button PIN
+button = Pin(15, Pin.IN, Pin.PULL_UP)
+
+#Variables
+programMode = False
+buttonState = False
 
 #Led cycle
 def cycleLeds(cycles):
@@ -55,14 +62,11 @@ def normalModeOn():
     print("---------------")
     relay(RELAY_OFF)
 
-#Led indication that program mode is on
+#Led configuratios for program mode
 def programModeOn():
     cycleLeds(2)
-    np[0] = WHITE
+    np[0] = BLUE
     np.write()
-    print("---------------")
-    print("Program Mode On.")
-    print("---------------")
     relay(RELAY_OFF)
 
 #Acess granted
@@ -71,7 +75,7 @@ def granted(setDelay):
     np.write()
     relay.value(RELAY_ON)
     print("---------------")
-    print("Access Granted.")
+    print("Welcome, You Shall Pass.")
     print("---------------")
     time.sleep(setDelay)
 
@@ -81,7 +85,7 @@ def denied():
     np.write()
     relay.value(RELAY_OFF)
     print("---------------")
-    print("Access Denied.")
+    print("You Shall Not Pass.")
     print("---------------")
     time.sleep(1)
 
@@ -131,12 +135,62 @@ def sucessDelete():
         i = i + 1 
 
 #Setup
-stp()
-
+stp = stp()
 startLed()
 print(".\n.\n.\n    Access Control v0.1     \n.\n.\n.")
 
 #Main Loop
 while(True):
+    cardTag = str(rf.get())
+    while(cardTag == "SemTag"):
+        if button.value() == BUTTON_ON:
+            np[0] = WHITE
+            np.write()
+            print("Button Pressed, Opening Door")
+            granted(1)
+        if programMode == True:
+            programModeOn()
+        else:
+            normalModeOn()
+        cardTag = str(rf.get())
+    #Caso não esteja lendo nenhum cartão, não proseguirá
     
+    if programMode == True:
+        if stp.IsMaster(cadTag):
+            print("Master Card Scanned")
+            print("Exiting Program Mode and Opening Door")
+            print("-----------------------------")
+            granted(1)
+            programMode = False
+            return
+        else:
+            if stp.findCard(cardTag):
+                print("I know this CARD, removing...")
+                stp.rmCard(cardTag)
+                print("-----------------------------")
+                print("Scan a CARD to ADD or REMOVE from memory")
+            else:
+                print("I do not know this CARD, adding...")
+                stp.addCard(cardTag)
+                print("-----------------------------")
+                print("Scan a CARD to ADD or REMOVE from memory")
+    else:
+        if stp.IsMaster(cadTag):
+            programMode = True
+            print("Hello Master - Entered Program Mode")
+            amount = stp.amount()
+            print("I have", amount, "card(s) on memory.\n")
+            print("-----------------------------")
+            print("Scan a CARD to ADD or REMOVE from memory")
+            print("Scan Master Card again to Exit Program Mode")
+            print("-----------------------------")
+        else:
+            if stp.findCard(cardTag):
+                granted(1)
+            else:
+                denied()
+            
+
+
+
 

@@ -32,7 +32,6 @@ class Setup:
             arq.close()
 
     def findCard(self, tag):
-
         arq = open("ID.json").read() #abrindo arquivo listas    
         arqload = ujson.loads(arq)  
         amount = int(len(arqload)) #tamanho da lista
@@ -63,7 +62,6 @@ class Setup:
 
     
     def rmCard(self,tag):
-
         pos = int(self.findCard(tag)[1]) 
         arq = open("ID.json").read()        #abrindo arquivo listas    
         arqload = ujson.loads(arq)
@@ -73,7 +71,6 @@ class Setup:
         arq.close()
 
     def IsMaster(self,tag):
-
         arq = open("ID.json").read()
         arqload = ujson.loads(arq)
 
@@ -81,4 +78,10 @@ class Setup:
             return True
         else:
             return False
+
+    def amount(self):
+        arq = open("ID.json").read() #abrindo arquivo listas    
+        arqload = ujson.loads(arq)  
+        amount = int(len(arqload)) #tamanho da lista
+        return amount
             
