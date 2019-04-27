@@ -22,7 +22,7 @@ class Setup:
             
             while(True):
                 time.sleep_ms(100)
-                IdMaster = {"ID": "okok"} #str(rf.get())
+                IdMaster = "okok" #str(rf.get())
 
                 if IdMaster != "SemTag":
                     break
@@ -43,35 +43,33 @@ class Setup:
         
         for i in range (amount):
             if arqload[i]["ID"] == findTag :
-                print("Tag ", findTag," encontrada na posicao", i)
-                arq.close()
+                print("Tag:", findTag, ":st: Found", i)
                 return (True,i)
 
-        arq.close()
-        print("Tag", findTag, "não encontrada")
+        print("Tag:", findTag, ":st: not found")
         return (False,i)
 
 
-    def addCard(self, tag):
+    def addCard(self, tag): #ATENÇAO: Lembrar de checar se a tag ja existe
 
-        arq = open("ID.json").read()                 #abrindo arquivo listas    
+        arq = open("ID.json").read()          #abrindo arquivo listas    
         arqload = ujson.loads(arq)
-        newdata = {"ID":"newssid"} #str(rf.get())
-        arqload.append(newdata)                 #add novo dado a lista redes
+        newdata = {"ID":tag} #str(rf.get())
+        arqload.append(newdata)              #add novo dado a lista redes
         arq = open("ID.json","w")
-        arq.write(ujson.dumps(arqload))                 #sobrecrevendo lista antiga com a nova lista atualizada
+        arq.write(ujson.dumps(arqload))      #sobrecrevendo lista antiga com a nova lista atualizada
         arq.close()
     
 
 
     def rmCard(self,tag):
 
-        (std,pos) = self.findCard(tag) 
-        arq = open("ID.json").read()                 #abrindo arquivo listas    
+        pos = int(self.findCard(tag)[1]) 
+        arq = open("ID.json").read()        #abrindo arquivo listas    
         arqload = ujson.loads(arq)
         arqload.pop(pos)
         arq = open("ID.json","w")
-        arq.write(ujson.dumps(arqload))                 #sobrecrevendo lista antiga com a nova lista atualizada
+        arq.write(ujson.dumps(arqload))    #sobrecrevendo lista antiga com a nova lista atualizada
         arq.close()
 
 
@@ -80,11 +78,9 @@ class Setup:
 
         arq = open("ID.json").read()
         arqload = ujson.loads(arq)
-        amount = int(len(arqload))
 
-        for i in range (amount):
-            if arqload[i]["ID"] == tag:
-                 return True
-            else:
-                return False
-
+        if arqload[0]["ID"] == tag:
+            return True
+        else:
+            return False
+            
