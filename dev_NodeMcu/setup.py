@@ -22,7 +22,7 @@ class Setup:
             
             while(True):
                 time.sleep_ms(100)
-                IdMaster = "okok" #str(rf.get())
+                IdMaster = str(rf.get())
 
                 if IdMaster != "SemTag":
                     break

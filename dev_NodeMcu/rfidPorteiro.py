@@ -4,7 +4,7 @@ rdr = mfrc522.MFRC522(0, 2, 4, 5, 14)
 class RfidPorteiro:
 
     def __init__(self):
-        print ("Rfid ativo")
+        print ("RFID Active")
 
     def get(self):
         tag = "SemTag"
