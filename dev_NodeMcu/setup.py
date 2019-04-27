@@ -41,19 +41,19 @@ class Setup:
         for i in range (amount):
             if arqload[i]["ID"] == findTag :
                 print("Tag:", findTag, ":st: Found", i)
-                return (True,i)
+                return True
 
         print("Tag:", findTag, ":st: not found")
-        return (False,i)
+        return False
 
     def addCard(self, tag):
         if self.findCard(tag)[0] == False:
-            arq = open("ID.json").read()          #abrindo arquivo listas    
+            arq = open("ID.json").read()    #abrindo arquivo listas    
             arqload = ujson.loads(arq)
             newdata = {"ID":tag} #str(rf.get())
-            arqload.append(newdata)              #add novo dado a lista redes
+            arqload.append(newdata)         #add novo dado a lista redes
             arq = open("ID.json","w")
-            arq.write(ujson.dumps(arqload))      #sobrecrevendo lista antiga com a nova lista atualizada
+            arq.write(ujson.dumps(arqload)) #sobrecrevendo lista antiga com a nova lista atualizada
             arq.close()
         else:
             print("> ............................ <")
@@ -67,7 +67,7 @@ class Setup:
         arqload = ujson.loads(arq)
         arqload.pop(pos)
         arq = open("ID.json","w")
-        arq.write(ujson.dumps(arqload))    #sobrecrevendo lista antiga com a nova lista atualizada
+        arq.write(ujson.dumps(arqload))     #sobrecrevendo lista antiga com a nova lista atualizada
         arq.close()
 
     def IsMaster(self,tag):
@@ -80,8 +80,8 @@ class Setup:
             return False
 
     def amount(self):
-        arq = open("ID.json").read() #abrindo arquivo listas    
+        arq = open("ID.json").read()        #abrindo arquivo listas    
         arqload = ujson.loads(arq)  
-        amount = int(len(arqload)) #tamanho da lista
+        amount = int(len(arqload))          #tamanho da lista
         return amount
             

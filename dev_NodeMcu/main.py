@@ -17,12 +17,11 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 WHITE = (128, 128, 128)
 
-
-#Pinnig state NeoPixel
-np = neopixel.NeoPixel(machine.Pin(13)(1))
+#NeoPixel Pin
+np = neopixel.NeoPixel(machine.Pin(13), (1))
 #Relay Pin
 relay = Pin(12, Pin.OUT)
-#Button PIN
+#Button Pin
 button = Pin(15, Pin.IN, Pin.PULL_UP)
 
 #Variables
@@ -136,6 +135,7 @@ def sucessDelete():
 
 #Setup
 stp = stp()
+rf = rf()
 startLed()
 print(".\n.\n.\n    Access Control v0.1     \n.\n.\n.")
 
@@ -156,13 +156,12 @@ while(True):
     #Caso não esteja lendo nenhum cartão, não proseguirá
     
     if programMode == True:
-        if stp.IsMaster(cadTag):
+        if stp.IsMaster(cardTag):
             print("Master Card Scanned")
             print("Exiting Program Mode and Opening Door")
             print("-----------------------------")
             granted(1)
             programMode = False
-            return
         else:
             if stp.findCard(cardTag):
                 print("I know this CARD, removing...")
@@ -175,12 +174,11 @@ while(True):
                 print("-----------------------------")
                 print("Scan a CARD to ADD or REMOVE from memory")
     else:
-        if stp.IsMaster(cadTag):
+        if stp.IsMaster(cardTag):
             programMode = True
             print("Hello Master - Entered Program Mode")
             amount = stp.amount()
             print("I have", amount, "card(s) on memory.\n")
-            print("-----------------------------")
             print("Scan a CARD to ADD or REMOVE from memory")
             print("Scan Master Card again to Exit Program Mode")
             print("-----------------------------")
