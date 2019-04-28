@@ -8,21 +8,28 @@ import machine, neopixel
 from machine import Pin
 
 #Defining constants
-RELAY_OFF = BUTTON_OFF = 0
-RELAY_ON = BUTTON_ON = 1
+RELAY_OFF = 0
+BUTTON_OFF = 1
+RELAY_ON = 1 
+BUTTON_ON = 0
 NP_OFF = (0, 0, 0)
+
+ORANGE = (255, 127, 0)
 RED = (255, 0, 0)
+YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
-YELLOW = (255, 255, 0)
+CYAN = (0,255,255)
+VIOLET =(255,0,255)
+
 WHITE = (128, 128, 128)
 
 #NeoPixel Pin
 np = neopixel.NeoPixel(machine.Pin(13), (1))
 #Relay Pin
-relay = Pin(12, Pin.OUT)
+relay = Pin(15, Pin.OUT)
 #Button Pin
-button = Pin(15, Pin.IN, Pin.PULL_UP)
+button = Pin(12, Pin.IN, Pin.PULL_UP)
 
 #Variables
 programMode = False
@@ -32,21 +39,33 @@ buttonState = False
 def cycleLeds(cycles):
     i = 0 
     while(i < cycles): 
-        np[0] = GREEN
+        np[0] = ORANGE
         np.write()
-        time.sleep(0.2)
-        np[0] = YELLOW
-        np.write()
-        time.sleep(0.2)
+        time.sleep_ms(100)
         np[0] = RED
         np.write()
-        time.sleep(0.2)
+        time.sleep_ms(100)
+        np[0] = YELLOW
+        np.write()
+        time.sleep_ms(100)
+        np[0] = GREEN
+        np.write()
+        time.sleep_ms(100)
+        np[0] = CYAN
+        np.write()
+        time.sleep_ms(100)
+        np[0] = BLUE
+        np.write()
+        time.sleep_ms(100)
+        np[0] = VIOLET
+        np.write()
+        time.sleep_ms(100)
         i = i + 1
-    np[0] = WHITE
-    np.write()
-    time.sleep(0.2)
-    np[0] = NP_OFF
-    np.write()
+    #np[0] = WHITE
+    #np.write()
+    #time.sleep(0.2)
+    #np[0] = NP_OFF
+    #np.write()
 
 #Startup Led
 def startLed():
@@ -54,7 +73,7 @@ def startLed():
 
 #Led configuration for normal mode
 def normalModeOn():
-    np[0] = YELLOW
+    np[0] = WHITE
     np.write()
     print("---------------")
     print("Normal Mode On.")
@@ -64,8 +83,8 @@ def normalModeOn():
 #Led configuratios for program mode
 def programModeOn():
     cycleLeds(2)
-    np[0] = BLUE
-    np.write()
+    #np[0] = BLUE
+    #np.write()
     relay(RELAY_OFF)
 
 #Acess granted
@@ -92,15 +111,15 @@ def denied():
 def sucessWrite():
     np[0] = NP_OFF
     np.write()
-    time.sleep(0.2)
+    time.sleep_ms(100)
     i = 0
     while(i < 3):
         np[0] = GREEN
         np.write()
-        time.sleep(0.2)
+        time.sleep_ms(100)
         np[0] = NP_OFF
         np.write()
-        time.sleep(0.2)
+        time.sleep_ms(100)
         i = i + 1 
 
 #Write Failed
@@ -142,9 +161,10 @@ print(".\n.\n.\n    Access Control v0.1     \n.\n.\n.")
 #Main Loop
 while(True):
     cardTag = str(rf.get())
+
     while(cardTag == "SemTag"):
         if button.value() == BUTTON_ON:
-            np[0] = WHITE
+            np[0] = GREEN
             np.write()
             print("Button Pressed, Opening Door")
             granted(1)
