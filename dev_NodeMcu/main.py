@@ -22,6 +22,8 @@ BLUE = (0, 0, 255)
 CYAN = (0,255,255)
 VIOLET =(255,0,255)
 
+LEDELAY = 50
+
 WHITE = (128, 128, 128)
 
 #NeoPixel Pin
@@ -41,25 +43,25 @@ def cycleLeds(cycles):
     while(i < cycles): 
         np[0] = ORANGE
         np.write()
-        time.sleep_ms(100)
+        time.sleep_ms(LEDELAY)
         np[0] = RED
         np.write()
-        time.sleep_ms(100)
+        time.sleep_ms(LEDELAY)
         np[0] = YELLOW
         np.write()
-        time.sleep_ms(100)
+        time.sleep_ms(LEDELAY)
         np[0] = GREEN
         np.write()
-        time.sleep_ms(100)
+        time.sleep_ms(LEDELAY)
         np[0] = CYAN
         np.write()
-        time.sleep_ms(100)
+        time.sleep_ms(LEDELAY)
         np[0] = BLUE
         np.write()
-        time.sleep_ms(100)
+        time.sleep_ms(LEDELAY)
         np[0] = VIOLET
         np.write()
-        time.sleep_ms(100)
+        time.sleep_ms(LEDELAY)
         i = i + 1
     #np[0] = WHITE
     #np.write()
@@ -89,8 +91,14 @@ def programModeOn():
 
 #Acess granted
 def granted(setDelay):
-    np[0] = GREEN
-    np.write()
+    #Suavisa ao acender a luz
+    for i in range(0,256):
+        np[0] = (0,i,0)
+        np.write()
+        time.sleep_ms(2)
+
+    #np[0] = GREEN
+    #np.write()
     relay.value(RELAY_ON)
     print("---------------")
     print("Welcome, You Shall Pass.")
@@ -99,8 +107,14 @@ def granted(setDelay):
 
 #Access denied
 def denied():
-    np[0] = RED
-    np.write()
+    #Suavisa ao acender a luz
+    for i in range(0,256):
+        np[0] = (i,0,0)
+        np.write()
+        time.sleep_ms(2)
+
+    #np[0] = RED
+    #np.write()
     relay.value(RELAY_OFF)
     print("---------------")
     print("You Shall Not Pass.")
@@ -164,8 +178,10 @@ while(True):
 
     while(cardTag == "SemTag"):
         if button.value() == BUTTON_ON:
-            np[0] = GREEN
-            np.write()
+
+            #np[0] = GREEN
+            #np.write()
+            
             print("Button Pressed, Opening Door")
             granted(1)
         if programMode == True:
@@ -189,7 +205,7 @@ while(True):
                 #add retorno visual
                 np[0] = RED
                 np.write()
-                time.sleep_ms(500)
+                time.sleep_ms(3000)
                 #fim do retorno visual
                 print("-----------------------------")
                 print("Scan a CARD to ADD or REMOVE from memory")
@@ -199,7 +215,7 @@ while(True):
                 #add retorno visual
                 np[0] = GREEN
                 np.write()
-                time.sleep_ms(500)
+                time.sleep_ms(3000)
                 #fim do retorno visual
                 print("-----------------------------")
                 print("Scan a CARD to ADD or REMOVE from memory")
