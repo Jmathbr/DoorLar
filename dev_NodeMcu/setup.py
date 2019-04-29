@@ -32,25 +32,25 @@ class Setup:
             arq.close()
 
     def findCard(self, tag):
-        arq = open("ID.json").read() #abrindo arquivo listas    
+        arq = open("ID.json").read()        #abrindo arquivo listas    
         arqload = ujson.loads(arq)  
-        amount = int(len(arqload)) #tamanho da lista
+        amount = int(len(arqload))          #tamanho da lista
 
         findTag = tag
         
         for i in range (amount):
             if arqload[i]["ID"] == findTag :
                 print("Tag:", findTag, ":st: Found", i)
-                return True
+                return (True, i)
 
         print("Tag:", findTag, ":st: not found")
-        return False
+        return (False, i)
 
     def addCard(self, tag):
         if self.findCard(tag)[0] == False:
             arq = open("ID.json").read()    #abrindo arquivo listas    
             arqload = ujson.loads(arq)
-            newdata = {"ID":tag} #str(rf.get())
+            newdata = {"ID":tag} 
             arqload.append(newdata)         #add novo dado a lista redes
             arq = open("ID.json","w")
             arq.write(ujson.dumps(arqload)) #sobrecrevendo lista antiga com a nova lista atualizada

@@ -18,7 +18,7 @@ YELLOW = (255, 255, 0)
 WHITE = (128, 128, 128)
 
 #NeoPixel Pin
-np = neopixel.NeoPixel(machine.Pin(13), (1))
+np = neopixel.NeoPixel(machine.Pin(13), 1)
 #Relay Pin
 relay = Pin(12, Pin.OUT)
 #Button Pin
@@ -163,7 +163,7 @@ while(True):
             granted(1)
             programMode = False
         else:
-            if stp.findCard(cardTag):
+            if stp.findCard(cardTag)[0]:
                 print("I know this CARD, removing...")
                 stp.rmCard(cardTag)
                 print("-----------------------------")
@@ -183,7 +183,7 @@ while(True):
             print("Scan Master Card again to Exit Program Mode")
             print("-----------------------------")
         else:
-            if stp.findCard(cardTag):
+            if stp.findCard(cardTag)[0]:
                 granted(1)
             else:
                 denied()
