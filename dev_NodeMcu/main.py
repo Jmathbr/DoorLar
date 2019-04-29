@@ -186,11 +186,21 @@ while(True):
             if stp.findCard(cardTag)[0]:
                 print("I know this CARD, removing...")
                 stp.rmCard(cardTag)
+                #add retorno visual
+                np[0] = RED
+                np.write()
+                time.sleep_ms(500)
+                #fim do retorno visual
                 print("-----------------------------")
                 print("Scan a CARD to ADD or REMOVE from memory")
             else:
                 print("I do not know this CARD, adding...")
                 stp.addCard(cardTag)
+                #add retorno visual
+                np[0] = GREEN
+                np.write()
+                time.sleep_ms(500)
+                #fim do retorno visual
                 print("-----------------------------")
                 print("Scan a CARD to ADD or REMOVE from memory")
     else:
