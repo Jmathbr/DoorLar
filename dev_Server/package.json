@@ -16,10 +16,12 @@
     "npm": "^6.4.0"
   },
   "devDependencies": {
-    "dotenv": "^6.0.0"
+    "dotenv": "^6.0.0",
+    "nodemon": "^1.19.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app"
   },
   "author": "Joao Matheus Bernardo Resende",
   "license": "ISC"
