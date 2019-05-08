@@ -7,6 +7,7 @@ import time
 import machine, neopixel
 from machine import Pin
 
+
 #Defining constants
 RELAY_OFF = 0
 BUTTON_OFF = 1
@@ -36,6 +37,15 @@ button = Pin(12, Pin.IN, Pin.PULL_UP)
 #Variables
 programMode = False
 buttonState = False
+t_ult = 0
+t_atual = 0
+
+#Sleep
+def sleep(t_ult, t_atual, time_ms):
+    if t_ult + t_atual >= time_ms:
+        return True
+    else:
+        return False
 
 #Led cycle
 def cycleLeds(cycles):
@@ -92,6 +102,7 @@ def programModeOn():
 #Acess granted
 def granted(setDelay):
     #Suavisa ao acender a luz
+    global t_ult = time.ticks_ms()
     for i in range(0,256):
         np[0] = (0,i,0)
         np.write()
@@ -103,7 +114,7 @@ def granted(setDelay):
     print("---------------")
     print("Welcome, You Shall Pass.")
     print("---------------")
-    time.sleep(setDelay)
+    sleep(t_ult, timesetDelay*1000)
 
 #Access denied
 def denied():
