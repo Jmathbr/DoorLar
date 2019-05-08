@@ -7,7 +7,6 @@ import time
 import machine, neopixel
 from machine import Pin
 
-
 #Defining constants
 RELAY_OFF = 0
 BUTTON_OFF = 1
@@ -41,47 +40,13 @@ t_ult = 0
 t_atual = 0
 
 #Sleep
-def sleep(t_ult, t_atual, time_ms):
-    if t_ult + t_atual >= time_ms:
+def sleep(t_ult, time_ms):
+    if t_ult + time.ticks_ms() >= time_ms:
         return True
     else:
         return False
 
-#Led cycle
-def cycleLeds(cycles):
-    i = 0 
-    while(i < cycles): 
-        np[0] = ORANGE
-        np.write()
-        time.sleep_ms(LEDELAY)
-        np[0] = RED
-        np.write()
-        time.sleep_ms(LEDELAY)
-        np[0] = YELLOW
-        np.write()
-        time.sleep_ms(LEDELAY)
-        np[0] = GREEN
-        np.write()
-        time.sleep_ms(LEDELAY)
-        np[0] = CYAN
-        np.write()
-        time.sleep_ms(LEDELAY)
-        np[0] = BLUE
-        np.write()
-        time.sleep_ms(LEDELAY)
-        np[0] = VIOLET
-        np.write()
-        time.sleep_ms(LEDELAY)
-        i = i + 1
-    #np[0] = WHITE
-    #np.write()
-    #time.sleep(0.2)
-    #np[0] = NP_OFF
-    #np.write()
 
-#Startup Led
-def startLed():
-    cycleLeds(4)
 
 #Led configuration for normal mode
 def normalModeOn():
@@ -99,22 +64,19 @@ def programModeOn():
     #np.write()
     relay(RELAY_OFF)
 
-#Acess granted
+#Access granted
 def granted(setDelay):
     #Suavisa ao acender a luz
-    global t_ult = time.ticks_ms()
     for i in range(0,256):
         np[0] = (0,i,0)
         np.write()
         time.sleep_ms(2)
 
-    #np[0] = GREEN
-    #np.write()
     relay.value(RELAY_ON)
     print("---------------")
     print("Welcome, You Shall Pass.")
     print("---------------")
-    sleep(t_ult, timesetDelay*1000)
+    time.sleep(setDelay)
 
 #Access denied
 def denied():
@@ -191,10 +153,6 @@ while(True):
 
     while(cardTag == "SemTag"):
         if button.value() == BUTTON_ON:
-
-            #np[0] = GREEN
-            #np.write()
-            
             print("Button Pressed, Opening Door")
             granted(1)
         if programMode == True:
