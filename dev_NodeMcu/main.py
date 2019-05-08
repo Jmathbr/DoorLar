@@ -172,6 +172,8 @@ rf = rf()
 startLed()
 print(".\n.\n.\n    Access Control v0.1     \n.\n.\n.")
 
+
+
 #Main Loop
 while(True):
     cardTag = str(rf.get())
