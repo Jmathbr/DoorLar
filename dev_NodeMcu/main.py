@@ -2,6 +2,7 @@ from rfidPorteiro import RfidPorteiro as rf
 from setup import Setup as stp
 import time
 import ujson
+from npControl from NpControl as npc
 
 import time
 import machine, neopixel
@@ -14,20 +15,20 @@ RELAY_ON = 1
 BUTTON_ON = 0
 NP_OFF = (0, 0, 0)
 
-ORANGE = (255, 127, 0)
-RED = (255, 0, 0)
-YELLOW = (255, 255, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-CYAN = (0,255,255)
-VIOLET =(255,0,255)
-
-LEDELAY = 50
-
-WHITE = (128, 128, 128)
-
+#ORANGE = (255, 127, 0)
+#RED = (255, 0, 0)
+#YELLOW = (255, 255, 0)
+#GREEN = (0, 255, 0)
+#BLUE = (0, 0, 255)
+#CYAN = (0,255,255)
+#VIOLET =(255,0,255)
+#WHITE = (128, 128, 128)
+#LEDELAY = 50
 #NeoPixel Pin
-np = neopixel.NeoPixel(machine.Pin(13), (1))
+#np = neopixel.NeoPixel(machine.Pin(13), (1))
+
+npc = npc(13)
+
 #Relay Pin
 relay = Pin(15, Pin.OUT)
 #Button Pin
@@ -50,8 +51,7 @@ def sleep(t_ult, time_ms):
 
 #Led configuration for normal mode
 def normalModeOn():
-    np[0] = WHITE
-    np.write()
+    npc.read()
     print("---------------")
     print("Normal Mode On.")
     print("---------------")
@@ -59,18 +59,17 @@ def normalModeOn():
 
 #Led configuratios for program mode
 def programModeOn():
-    cycleLeds(2)
-    #np[0] = BLUE
-    #np.write()
+    npc.cycleLeds(2)
     relay(RELAY_OFF)
 
 #Access granted
 def granted(setDelay):
     #Suavisa ao acender a luz
-    for i in range(0,256):
-        np[0] = (0,i,0)
-        np.write()
-        time.sleep_ms(2)
+    #for i in range(0,256):
+    #    np[0] = (0,i,0)
+    #    np.write()
+    #    time.sleep_ms(2)
+    npc.granted()
 
     relay.value(RELAY_ON)
     print("---------------")
@@ -81,13 +80,13 @@ def granted(setDelay):
 #Access denied
 def denied():
     #Suavisa ao acender a luz
-    for i in range(0,256):
-        np[0] = (i,0,0)
-        np.write()
-        time.sleep_ms(2)
-
+    #for i in range(0,256):
+    #    np[0] = (i,0,0)
+    #    np.write()
+    #    time.sleep_ms(2)
     #np[0] = RED
     #np.write()
+    npc.denied()
     relay.value(RELAY_OFF)
     print("---------------")
     print("You Shall Not Pass.")
@@ -95,54 +94,54 @@ def denied():
     time.sleep(1)
 
 #Write Sucess
-def sucessWrite():
-    np[0] = NP_OFF
-    np.write()
-    time.sleep_ms(100)
-    i = 0
-    while(i < 3):
-        np[0] = GREEN
-        np.write()
-        time.sleep_ms(100)
-        np[0] = NP_OFF
-        np.write()
-        time.sleep_ms(100)
-        i = i + 1 
+#def sucessWrite():
+#    np[0] = NP_OFF
+#    np.write()
+#    time.sleep_ms(100)
+#    i = 0
+#    while(i < 3):
+#        np[0] = GREEN
+#        np.write()
+#        time.sleep_ms(100)
+#        np[0] = NP_OFF
+#        np.write()
+#        time.sleep_ms(100)
+#        i = i + 1 
 
 #Write Failed
-def failedWrite():
-    np[0] = NP_OFF
-    np.write()
-    time.sleep(0.2)
-    i = 0
-    while(i < 3):
-        np[0] = RED
-        np.write()
-        time.sleep(0.2)
-        np[0] = NP_OFF
-        np.write()
-        time.sleep(0.2)
-        i = i + 1 
+#def failedWrite():
+#    np[0] = NP_OFF
+#    np.write()
+#    time.sleep(0.2)
+#    i = 0
+#    while(i < 3):
+#        np[0] = RED
+#        np.write()
+#        time.sleep(0.2)
+#        np[0] = NP_OFF
+#        np.write()
+#        time.sleep(0.2)
+#        i = i + 1 
 
 #Delete Sucess
-def sucessDelete():
-    np[0] = NP_OFF
-    np.write()
-    time.sleep(0.2)
-    i = 0
-    while(i < 3):
-        np[0] = YELLOW
-        np.write()
-        time.sleep(0.2)
-        np[0] = NP_OFF
-        np.write()
-        time.sleep(0.2)
-        i = i + 1 
+#def sucessDelete():
+#    np[0] = NP_OFF
+#    np.write()
+#    time.sleep(0.2)
+#    i = 0
+#    while(i < 3):
+#        np[0] = YELLOW
+#        np.write()
+#        time.sleep(0.2)
+#        np[0] = NP_OFF
+#        np.write()
+#        time.sleep(0.2)
+#        i = i + 1 
 
 #Setup
 stp = stp()
 rf = rf()
-startLed()
+#startLed()
 print(".\n.\n.\n    Access Control v0.1     \n.\n.\n.")
 
 
@@ -174,9 +173,7 @@ while(True):
                 print("I know this CARD, removing...")
                 stp.rmCard(cardTag)
                 #add retorno visual
-                np[0] = RED
-                np.write()
-                time.sleep_ms(3000)
+                npc.rm()
                 #fim do retorno visual
                 print("-----------------------------")
                 print("Scan a CARD to ADD or REMOVE from memory")
@@ -184,9 +181,8 @@ while(True):
                 print("I do not know this CARD, adding...")
                 stp.addCard(cardTag)
                 #add retorno visual
-                np[0] = GREEN
-                np.write()
-                time.sleep_ms(3000)
+                npc.add()
+
                 #fim do retorno visual
                 print("-----------------------------")
                 print("Scan a CARD to ADD or REMOVE from memory")
