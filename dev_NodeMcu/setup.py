@@ -80,10 +80,9 @@ class Setup:
         arqload = ujson.loads(arq)
         print(arqload[0]["ID"])
         if arqload[0]["ID"] == tag:
-            print("true")
+            print("TAG - Master")
             return True
         else:
-            print("false")
             return False
             
     def amount(self):
