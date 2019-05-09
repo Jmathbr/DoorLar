@@ -2,7 +2,8 @@ from rfidPorteiro import RfidPorteiro as rf
 import ujson
 import time
 rf = rf()
-#Setup
+#Setup]
+
 class Setup:
 
 
@@ -90,3 +91,11 @@ class Setup:
         arqload = ujson.loads(arq)  
         amount = int(len(arqload))          #tamanho da lista
         return amount
+#    
+#    def programMode(self,tag):
+#        while self.IsMaster(tag):
+#            while tag == "SemTag":
+#                
+#                npc.cycle
+#        
+

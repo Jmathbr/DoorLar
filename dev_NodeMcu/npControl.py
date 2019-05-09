@@ -61,12 +61,17 @@ class NpControl:
     def granted(self):
         self.np[0] = GREEN
         self.np.write()
-        time.sleep_ms(time_ms)
+        #time.sleep_ms(time_ms)
+
+    def denied(self):
+        self.np[0] = RED
+        self.np.write()
+        #time.sleep_ms(time_ms)
     
     def read(self):
         self.np[0] = WHITE
         self.np.write()
-        time.sleep_ms(time_ms)
+        #time.sleep_ms(time_ms)
     
     def add(self):
         self.np[0] = BLUE
