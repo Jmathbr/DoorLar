@@ -1,8 +1,9 @@
 from rfidPorteiro import RfidPorteiro as rf
 import ujson
 import time
+rf = rf()
+#Setup]
 
-#Setup
 class Setup:
 
 
@@ -14,6 +15,7 @@ class Setup:
             arq = open("ID.json").read()
             print("Found ID Master")
             arqload = ujson.loads(arq)
+            arqload[0]["ID"]
 
         except:
             print("Not Found ID Master")
@@ -73,12 +75,13 @@ class Setup:
     def IsMaster(self,tag):
         arq = open("ID.json").read()
         arqload = ujson.loads(arq)
-
+        print(arqload[0]["ID"])
         if arqload[0]["ID"] == tag:
+            print("TAG - Master")
             return True
         else:
             return False
-
+            
     def amount(self):
         arq = open("ID.json").read()        #abrindo arquivo listas    
         arqload = ujson.loads(arq)  
