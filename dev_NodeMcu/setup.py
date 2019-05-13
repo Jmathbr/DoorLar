@@ -2,7 +2,8 @@ from rfidPorteiro import RfidPorteiro as rf
 import ujson
 import time
 rf = rf()
-#Setup]
+
+# Setup
 
 class Setup:
 

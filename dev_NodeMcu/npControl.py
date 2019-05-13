@@ -53,7 +53,6 @@ class NpControl:
             self.np.write()
             time.sleep_ms(time_ms)
 
-
     #Startup Led
     def startLed(self, cycles):
         self.cycleLeds(4)
@@ -68,7 +67,7 @@ class NpControl:
         self.np.write()
         #time.sleep_ms(time_ms)
     
-    def read(self):
+    def reading(self):
         self.np[0] = WHITE
         self.np.write()
         #time.sleep_ms(time_ms)
