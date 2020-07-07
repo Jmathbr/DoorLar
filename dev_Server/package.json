@@ -13,7 +13,7 @@
     "express-validator": "^4.3.0",
     "mongodb": "^2.2.33",
     "mysql": "^2.15.0",
-    "npm": "^6.4.0"
+    "npm": "^6.14.6"
   },
   "devDependencies": {
     "dotenv": "^6.0.0"
