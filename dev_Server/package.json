@@ -4,7 +4,7 @@
   "description": "- OBS: para executar o codigo basta ter o nodejs no pc e entrar na pasta, depois digita \"node app\" pronto o servidor estara On",
   "main": "app.js",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.18.2",
     "consign": "^0.1.6",
     "ejs": "^2.5.7",
